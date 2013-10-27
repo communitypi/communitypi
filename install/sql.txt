@@ -1,0 +1,181 @@
+CREATE TABLE IF NOT EXISTS `friendrequests_db` (
+  `id` int(255) NOT NULL auto_increment,
+  `uid` int(255) NOT NULL,
+  `friendid` int(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=129 ;
+
+CREATE TABLE IF NOT EXISTS `groups_db` (
+  `id` int(255) NOT NULL auto_increment,
+  `name` varchar(255) NOT NULL,
+  `desc` longtext NOT NULL,
+  `owner` int(255) NOT NULL,
+  `creation` int(255) NOT NULL,
+  `image` longtext NOT NULL,
+  `slug` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+CREATE TABLE IF NOT EXISTS `friends_db` (
+  `id` int(255) unsigned NOT NULL auto_increment,
+  `uid` int(255) NOT NULL,
+  `friend` int(255) NOT NULL,
+  `time` int(30) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=178 ;
+
+
+
+CREATE TABLE IF NOT EXISTS `group_invites_db` (
+  `id` int(255) NOT NULL auto_increment,
+  `uid` int(255) NOT NULL,
+  `fid` int(255) NOT NULL,
+  `gid` int(255) NOT NULL,
+  `time` int(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+CREATE TABLE IF NOT EXISTS `group_members_db` (
+  `id` int(255) NOT NULL auto_increment,
+  `uid` int(255) NOT NULL,
+  `gid` int(255) NOT NULL,
+  `time` int(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+CREATE TABLE IF NOT EXISTS `group_timeline_db` (
+  `id` int(255) NOT NULL auto_increment,
+  `gid` int(255) NOT NULL,
+  `uid` int(255) NOT NULL,
+  `action` longtext,
+  `time` int(40) default NULL,
+  `reply_to` int(255) default NULL,
+  `type` varchar(3) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=7 ;
+
+CREATE TABLE IF NOT EXISTS `ignored_friend_suggestions_db` (
+  `id` int(255) NOT NULL auto_increment COMMENT 'ID of table entry',
+  `uid` int(255) NOT NULL COMMENT 'User ID',
+  `iid` int(255) NOT NULL COMMENT 'Ignored User ID',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
+
+CREATE TABLE IF NOT EXISTS `messages_db` (
+  `id` int(255) NOT NULL auto_increment,
+  `from` int(255) NOT NULL,
+  `to` int(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `message` longtext NOT NULL,
+  `time` int(32) NOT NULL,
+  `read` int(1) NOT NULL,
+  `deleted` int(11) NOT NULL default '0',
+  `replyto` int(255) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
+
+CREATE TABLE IF NOT EXISTS `notifications_db` (
+  `id` int(255) NOT NULL auto_increment COMMENT 'Notification ID',
+  `time` int(255) NOT NULL COMMENT 'Date and time',
+  `uid` int(255) NOT NULL COMMENT 'ID of the user the notification is for',
+  `desc` longtext NOT NULL COMMENT 'The notification itself',
+  `link` varchar(255) NOT NULL COMMENT 'Relevant link',
+  `imgref` varchar(255) NOT NULL COMMENT 'Associated image',
+  `read` varchar(3) NOT NULL COMMENT 'whether or not it has been read',
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1080 ;
+
+CREATE TABLE IF NOT EXISTS `online_db` (
+  `uid` int(255) NOT NULL,
+  `time` int(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `photos_db` (
+  `id` int(255) unsigned NOT NULL auto_increment,
+  `filename` varchar(255) NOT NULL,
+  `batch` text NOT NULL,
+  `width` int(4) NOT NULL,
+  `height` int(4) NOT NULL,
+  `owner` int(255) NOT NULL,
+  `time` int(32) NOT NULL,
+  `size` int(255) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `desc` longtext NOT NULL,
+  `group` int(11) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=128 ;
+
+
+CREATE TABLE IF NOT EXISTS `profile_db` (
+  `pid` int(255) NOT NULL auto_increment,
+  `uid` int(255) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `birth` varchar(50) NOT NULL,
+  `bio` longtext NOT NULL,
+  `quest1` longtext NOT NULL,
+  `quest2` longtext NOT NULL,
+  `quest3` longtext NOT NULL,
+  `quest4` longtext NOT NULL,
+  `publicprof` int(1) NOT NULL default '0',
+  `userprof` int(1) NOT NULL default '0',
+  `welcome` int(1) NOT NULL default '0',
+  `profileupd` varchar(32) NOT NULL,
+  `emailOnFriendRequest` varchar(3) NOT NULL default '1',
+  `emailOnComment` varchar(3) NOT NULL default '1' COMMENT 'When someone replies to your status',
+  `emailOnGroupMessage` varchar(3) NOT NULL default '1',
+  `emailOnMessage` varchar(3) NOT NULL default '1' COMMENT 'When someone sends you a personal message',
+  PRIMARY KEY  (`pid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=45 ;
+
+
+CREATE TABLE IF NOT EXISTS `settings_db` (
+  `id` int(255) unsigned NOT NULL auto_increment,
+  `name` longtext NOT NULL,
+  `value` text NOT NULL,
+  `comment` varchar(255) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+
+INSERT INTO `settings_db` (`id`, `name`, `value`, `comment`) VALUES
+(1, 'theme', 'default', 'Theme Name'),
+(2, 'baseurl', '', 'Base URL'),
+(3, 'site_name', 'CommunityPi', 'Site Name'),
+(4, 'site_desc', 'A really cool social network.', 'Site Description'),
+(5, 'mailfrom', '', 'Send email from'),
+(6, 'path', '', 'Full Path '),
+(7, 'profile_quest1', 'Do you consider yourself a geek?', 'Profile Question 1'),
+(8, 'profile_quest2', 'Are you a Mac or a PC?', 'Profile Question 2'),
+(9, 'profile_quest3', 'What is the meaning of life?', 'Profile Question 3'),
+(10, 'profile_quest4', 'Is this a question?', 'Profile Question 4'),
+(11, 'bio_char_limit', '1000', 'Biography character limit'),
+(12, 'minage', '13', 'Minimum Age'),
+(13, 'maxuploadfilesize', '2097152', 'Max File Size');
+
+CREATE TABLE IF NOT EXISTS `timeline_db` (
+  `id` int(255) unsigned NOT NULL auto_increment,
+  `uid` int(255) NOT NULL,
+  `action` longtext NOT NULL,
+  `time` int(40) NOT NULL,
+  `reply_to` int(255) NOT NULL,
+  `type` varchar(3) NOT NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1247 ;
+
+CREATE TABLE IF NOT EXISTS `users_db` (
+  `id` int(255) unsigned NOT NULL auto_increment,
+  `username` varchar(14) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `password1` varchar(50) NOT NULL,
+  `password2` varchar(50) NOT NULL,
+  `active` int(1) NOT NULL default '0',
+  `banned` int(1) NOT NULL default '0',
+  `joined` int(30) NOT NULL,
+  `lastlogin` int(30) NOT NULL,
+  `root` int(1) NOT NULL default '0',
+  `admin` int(1) NOT NULL default '0',
+  `mobile` varchar(15) NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`),
+  KEY `id_2` (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COMMENT='User/Login Info' AUTO_INCREMENT=45 ;
